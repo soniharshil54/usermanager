@@ -1,0 +1,35 @@
+{
+    "name": "Harshil Soni",
+    "email": "hashil43@yahoo.com",
+    "dob":"29-02-2019",
+    "contact": "8686865852",
+    "address": "vrajbhumi",
+    "country":"india",
+    "state":"gujarat",
+    "city":"surat",
+    "password":"soni3360"
+}
+
+
+// $.ajax({
+			// 	    url: 'http://localhost:5000/api/user/signup',
+			// 	    headers: {
+				        
+			// 	        'Content-Type':'application/json'
+			// 	    },
+			// 	    method: 'POST',
+			// 	    dataType: 'json',
+			// 	    data: 	{
+			// 	    "name": "Harshil Soni",
+			// 	    "email": "hashasa3@yahoo.com",
+			// 	    "contact": "8686865852",
+			// 	    "address": "vrajbhumi",
+			// 	    "country":"india",
+			// 	    "state":"gujarat",
+			// 	    "city":"surat",
+			// 	    "password":"soni3360"
+			// 	},
+			// 	    success: function(data){
+			// 	      console.log('succes: '+data);
+			// 	    }
+			// 	  });

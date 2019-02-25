@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>user manager</title>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+  
+  
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/smokejs/3.1.1/css/smoke.min.css">
+   
+
+
+
+   <style type="text/css">
+
+   #deleteAlert{
+   	display: none
+   }
+
+   #loggedIn{
+	display: none;
+   }
+
+   #notloggedbtn{
+   	display: none;
+   }
+
+   #userDataTable{
+   	display: none;
+   }
+   	[hidden] {
+  display: none !important;
+}
+
+#mailEx{
+	display: none;
+}
+
+#log_error{
+
+}
+
+   </style>
+
+</head>
+<body>
+	<div id="deleteAlert" class="alert alert-danger alert-dismissible">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Deleted</strong> You have deleted your account...
+  </div>
+
+  <!-- <div class="alert alert-success alert-dismissible">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Congratulations</strong> You have successfully created an account. now login to see the registered users.
+  </div> -->
+
+
+	<div id="loggedIn" class="container">
+		<button onclick="logOutUser()" style="display: block;float: right;" type="button" class="btn btn-danger btn-lg">Logout</button>
+		<class class="row">
+
+
+			<div class="col-md-4">
+
+				<img style="border-radius: 50%;" height="200px" width="200px" id="profileimage" src="">
+
+				
+				
+			</div>
+			<div class="col-md-4">
+				<br><br>
+				<h3><span>Wellcome </span><span style="font-weight: bold;" id="logusername"></span></h3>
+				<h4><span>Date of birth: </span><span style="font-weight: bold;" id="loguserdob"></span></h4>
+				<h4><span>Email: </span><span style="font-weight: bold;" id="loguseremail"></span></h4>
+				
+				
+				
+		    </div>
+		    <div class="col-md-4">
+		    	<button style="display: inline;" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#editUp">Edit</button>
+   				<button id="deleteuser" style="display: inline;" type="button" class="btn btn-danger btn-lg">Delete</button>
+		    	<h4><span>Contact: </span><span style="font-weight: bold;" id="logusercontact"></span></h4>
+				<h4><span>Address: </span><span style="font-weight: bold;" id="loguseraddress"></span></h4>
+				
+		    </div>
+		</class>s
+		
+	</div>
+
+
+
+	<h2 id="logintosee"></h2>
+	<div class="container" style="display: inline;">
+  
+  <!-- Trigger the modal with a button -->
+  <div id="notloggedbtn">
+  <button style="display: inline;" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#signUp">Register</button>
+   <button style="display: inline;" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#logIn">Log in</button>
+   </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="signUp" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Register</h4>
+        </div>
+        <div class="modal-body">
+          <form id="signupForm" enctype="multipart/form-data">
+
+          	  <div class="form-row">
+			    <div class="form-group col-md-6">
+			      <label class="control-label">Name</label>
+			      <input type="text" name="name" class="form-control" placeholder="Name" minlength="4" maxlength="8" required>
+			    </div>
+			    <div class="form-group col-md-6">
+			      <label for="signDob">Date of birth</label><span id="dobvalid" style="color: red"></span>
+			      <input name="dob" type="Date" class="form-control" id="signDob" placeholder="date">
+			    </div>
+			  </div>
+			  <div class="form-row">
+			    <div class="form-group col-md-6">
+			      <label for="signEmail">Email</label>
+			      <label name="email" id="mailEx" style="color: red">(Mail already exists...)</label>
+			      <input name="email" type="email" class="form-control" placeholder="Email" required>
+			   <!--    <label id="mailEx">Mail already exists...</label> -->
+			    </div>
+			    <div class="form-group col-md-6">
+			      <label for="signPassword">Contact</label>
+			      <input name="contact" type="text" class="form-control" minlength="10" maxlength="10" placeholder="enter Contact" required>
+			    </div>
+			  </div>
+			  <div class="form-row">
+			  <div class="form-group col-md-12">
+			    <label for="signAddress">Address</label>
+			    <input name="address" type="text" class="form-control" id="signAddress" placeholder="enter your address" required>
+			  </div>
+			  </div>
+			 
+			  <div class="form-row">
+			    <div class="form-group col-md-4">
+			      <label for="signCountry">Country</label>
+			      <input name="country" type="text" class="form-control" required>
+			    </div>
+			    <div class="form-group col-md-4">
+			      <label for="signState">State</label>
+			      <select name="state" id="signState" class="form-control" required>
+			        <option selected>Choose...</option>
+			        <option>gujarat</option>
+			      </select>
+			    </div>
+			    <div class="form-group col-md-4">
+			      <label for="signCity">City</label>
+			      <input name="city" type="text" class="form-control" id="signCity" required>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			  	 <div class="form-group col-md-6">
+			      <label for="signPassword">Password</label>
+			      <input name="password" type="password" class="form-control" id="pass1" placeholder="Password" required>
+			    </div>
+			    <div class="form-group col-md-6">
+			      <label for="signPasswordconf">Confirm Password</label>
+			      <input type="password" class="form-control" id="pass2" placeholder="Confirm Password">
+			    </div>
+			  </div>
+			 	<div class="form-row">
+			    <div class="form-group col-md-12">
+			    	  <label class="btn btn-default">
+						    Choose your profile photo <input name="profileImage" type="file" hidden>
+						</label>
+				</div>
+				</div>
+			  
+			 
+			  <button type="submit" id="sign_up" class="btn btn-primary">Sign up</button>
+			</form>
+        </div>
+       <!--  <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div> -->
+      </div>
+      
+    </div>
+  </div>
+
+</div>
+
+
+<div class="container">
+	<div class="modal fade" id="editUp" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit yourself</h4>
+        </div>
+        <div class="modal-body">
+          <form id="editUserForm">
+
+          	  <div class="form-row">
+			    <div class="form-group col-md-6">
+			      <label class="control-label">Name</label>
+			      <input id="editname" type="text" name="name" class="form-control" placeholder="Name" minlength="4" maxlength="8" required>
+			    </div>
+			    <div class="form-group col-md-6">
+			      <label for="signDob">Date of birth</label>
+			      <input id="editdob" name="dob" type="Date" class="form-control" id="signDob" placeholder="date">
+			    </div>
+			  </div>
+			  <div class="form-row">
+			    <div class="form-group col-md-6">
+			      <label for="signEmail">Email</label>
+			      <label id="mailEx" style="color: red">(Mail already exists...)</label>
+			      <input id="editmail" name="editmail" type="email" class="form-control" placeholder="Email" required readonly>
+			   <!--    <label id="mailEx">Mail already exists...</label> -->
+			    </div>
+			    <div class="form-group col-md-6">
+			      <label for="signPassword">Contact</label>
+			      <input id="editcontact" name="contact" type="text" class="form-control" minlength="10" maxlength="10" placeholder="enter Contact" required>
+			    </div>
+			  </div>
+			  <div class="form-row">
+			  <div class="form-group col-md-12">
+			    <label for="signAddress">Address</label>
+			    <input name="address" type="text" class="form-control" id="editaddress" placeholder="enter your address" required>
+			  </div>
+			  </div>
+			 
+			  <div class="form-row">
+			    <div class="form-group col-md-4">
+			      <label for="signCountry">Country</label>
+			      <input id="editcountry" name="country" type="text" class="form-control" required>
+			    </div>
+			    <div class="form-group col-md-4">
+			      <label for="signState">State</label>
+			      <select name="state" id="editstate" class="form-control" required>
+			        <option selected>Choose...</option>
+			        <option>gujarat</option>
+			      </select>
+			    </div>
+			    <div class="form-group col-md-4">
+			      <label for="signCity">City</label>
+			      <input name="city" type="text" class="form-control" id="editcity" required>
+			    </div>
+			  </div>
+			<!--   <div class="form-group">
+			  	 <div class="form-group col-md-6">
+			      <label for="signPassword">Password</label>
+			      <input name="password" type="password" class="form-control" id="pass1" placeholder="Password" required>
+			    </div>
+			    <div class="form-group col-md-6">
+			      <label for="signPasswordconf">Confirm Password</label>
+			      <input type="password" class="form-control" id="pass2" placeholder="Confirm Password">
+			    </div>
+			  </div> -->
+			 	<!-- <div class="form-row">
+			    <div class="form-group col-md-12">
+			    	  <label class="btn btn-default">
+						    Choose your profile photo <input name="profileImage" type="file" hidden>
+						</label>
+				</div>
+				</div> -->
+			  
+			 
+			  <button type="submit" id="edit_user" class="btn btn-primary">Edit</button>
+			</form>
+        </div>
+       <!--  <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div> -->
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+
+	<div class="container" style="display: inline;">
+
+  <!-- Trigger the modal with a button -->
+ 
+
+  <!-- Modal -->
+  <div class="modal fade" id="logIn" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Login</h4>
+          	<h5 id="signedup" style="color: green"></h5>
+           <h5 id="log_error" style="color: red"></h5>
+        </div>
+        <div class="modal-body">
+          <form>
+			  <div class="form-row">
+			    <div class="form-group col-md-6">
+			      <label for="inputEmail4">Email</label>
+			      <input type="email" class="form-control" id="logMail" placeholder="Email">
+
+			      
+			    </div>
+			    <div class="form-group col-md-6">
+			      <label for="inputPassword4">Password</label>
+			      <input type="password" class="form-control" id="logPassword" placeholder="Password">
+			    </div>
+			  </div>
+			  <button id="log_in" class="btn btn-primary">Log in</button>
+			</form>
+        </div>
+       <!--  <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div> -->
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+<div id="userDataTable">
+<table id="userDataShow" class="display table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Contact</th>
+                <th>DOB</th>
+                <th>Address</th>
+                <th>City</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Contact</th>
+                <th>DOB</th>
+                <th>Address</th>
+                <th>City</th>
+            </tr>
+        </tfoot>
+    </table>
+    </div>
+
+
+
+
+
+
+
+
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/smokejs/3.1.1/js/smoke.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+
+
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		loggedIn()
+	})
+
+
+$(document).ready(function(){
+	$('#sign_up').click(function(e) {
+          e.preventDefault();
+          console.log("smoked")
+          var dobval = $('#signDob').val()
+          console.log(dobval)
+          var dobval2 = dobval.split('-')[0]
+          console.log(dobval2)
+
+          if (dobval2>2001) {
+          	$('#dobvalid').html('u shouldbe 18+')
+
+          }
+
+          else {
+
+          $('#dobvalid').html('')
+          if ($('#signupForm').smkValidate()) {
+            if( $.smkEqualPass('#pass1', '#pass2') ) {
+
+            	console.log("all set")
+            	$('#signUp').modal("hide")
+            	$('#signedup').html("you created an account, now log in to use the features.")
+            	$('#logIn').modal("show")
+
+            	var formData = new FormData($('#signupForm')[0])
+			
+
+
+				$.ajax({
+					    url: 'http://localhost:5000/api/user/signup',
+					    method: 'POST',
+					    cache: false,
+	     			    contentType: false,
+	     			    processData: false,
+					    data: 	formData,
+					    success: function(data){
+					    	
+					        console.log(JSON.stringify(data));
+					    },
+					     error: function (req, status, err) {
+   						     console.log(err);
+   						 }
+					  });
+            	
+              // Code here
+              // $.smkAlert({
+              //   text: 'Validate!',
+              //   type: 'success'
+              // });
+            } 
+            else {
+            	console.log("passwords didnt match")
+            }
+          }
+      }
+
+         
+
+        });
+})
+
+
+$(document).ready(function(){
+	$('#edit_user').click(function(e) {
+          e.preventDefault();
+          console.log("smoked")
+          if ($('#editUserForm').smkValidate()) {
+            
+
+            	console.log("all set")
+            	$('#editUp').modal("hide")
+            	
+    
+
+            	// var editformData = new FormData($('#editUserForm')[0])
+            	var editname = $("#editname").val()
+            	var editmail = $("#editmail").val()
+            	var editcontact = $("#editcontact").val()
+            	var editdob = $("#editdob").val()
+            	var editaddress = $("#editaddress").val()
+            	var editcity = $("#editcity").val()
+            	var editstate = $("#editstate").val()
+            	var editcountry = $("#editcountry").val()
+
+            	 var edata = {
+          
+				    address: editaddress,
+				    email: editmail,
+				    contact: editcontact,
+				    dob: editdob,
+				    city:editcity,
+				    state: editstate,
+				    country: editcountry
+				   
+
+            	}
+
+
+			
+            	$.ajax({
+  							url : 'http://localhost:5000/api/user/edit',
+  							data : JSON.stringify(edata),
+  							type : 'PATCH',
+  							contentType : 'application/json',
+  							processData: false,
+  							success: function(data){
+					    	
+					        console.log(JSON.stringify(data));
+					    },
+					     error: function (req, status, err) {
+   						     console.log(err);
+   						 },
+  dataType: 'json'
+});
+
+				// $.ajax({
+				// 	    url: 'http://localhost:5000/api/user/edit',
+				// 	    method: 'PATCH',
+				// 	    cache: false,
+	   //   			    contentType : false,
+	     			   
+				// 	    data: 	JSON.stringify(edata),
+				// 	    success: function(data){
+					    	
+				// 	        console.log(JSON.stringify(data));
+				// 	    },
+				// 	     error: function (req, status, err) {
+   	// 					     console.log(err);
+   	// 					 }
+				// 	  });
+            	
+          }
+
+          else {
+          	console.log("not validated")
+          }
+
+        });
+})
+
+
+
+
+
+	
+
+	function logOutUser(){
+		localStorage.clear();
+		$('#loggedIn').css("display","none")
+		$('#logintosee').html("login to see the registered users")
+		$('#notloggedbtn').css("display","block")
+		$('#userDataTable').css("display","none")
+	}
+
+	function loggedIn(){
+		
+		if (localStorage.getItem("luser") === null) {
+			$('#loggedIn').css("display","none")
+     		$('#logintosee').html("login to see the registered users")
+     		$('#notloggedbtn').css("display","block")
+     		
+		}
+		else{
+			var loguser = JSON.parse(localStorage.getItem('luser'));
+			var username = loguser.name;
+			var address = loguser.address +" ," + loguser.city +" ,"+loguser.state +" ,"+loguser.country
+			var imagepath = "http://localhost:5000/" + loguser.profile
+
+			$('#notloggedbtn').css("display","none")
+			$('#userDataTable').css("display","block")
+			$('#logintosee').html("")
+			$('#loggedIn').css("display","block")
+			var authtokend = localStorage.getItem('authorization')
+			console.log(authtokend)
+			
+			console.log(username)
+			$('#logusername').html(loguser.name)
+			$('#logusercontact').html(loguser.contact)
+			$('#loguserdob').html(loguser.dob)
+			$('#loguseremail').html(loguser.email)
+			$('#loguseraddress').html(address)
+			$("#profileimage").attr("src",imagepath);
+
+			$("#editname").attr("value", loguser.name);
+			$('#editdob').attr("value", loguser.dob);
+			$("#editmail").attr("value", loguser.email);
+			$("#editcontact").attr("value", loguser.contact);
+			$("#editaddress").attr("value", loguser.address);
+			$("#editcountry").attr("value", loguser.country);
+			$('#editstate').val("gujarat");
+			$("#editcity").attr("value", loguser.city);
+			
+		}
+	}
+	
+</script>
+
+
+<script type="text/javascript">
+
+
+
+
+
+
+	$(document).ready(function() {
+		
+		if (localStorage.getItem("luser") !== null){
+
+    $('#userDataShow').DataTable( {
+        "ajax": {
+            "url": "http://localhost:5000/api/user/dashboard",
+            "dataSrc": "",
+            'beforeSend': function (request) {
+  			      request.setRequestHeader("Authorization", localStorage.getItem('authorization'));
+ 			   }
+        },
+        "columns": [
+            { "data": "name" },
+            { "data": "email" },
+            { "data": "contact" },
+            { "data": "dob" },
+            { "data": "address" },
+            { "data": "city" }
+        ]
+    } );
+
+}
+} );
+
+
+	// $(document).ready(function(){
+	// 	$('#sign_up').click(function(e){
+
+	// 		e.preventDefault();
+	// 		var formData = new FormData($('#signupForm')[0])
+			
+
+
+	// 		$.ajax({
+	// 			    url: 'http://localhost:5000/api/user/signup',
+	// 			    method: 'POST',
+	// 			    cache: false,
+ //     			    contentType: false,
+ //     			    processData: false,
+	// 			    data: 	formData,
+	// 			    success: function(data){
+	// 			    	$("#logIn").modal("hide");
+	// 			        console.log('succes: '+data);
+	// 			    }
+	// 			  });
+
+
+			
+
+
+			
+	// 	})
+	// })
+
+
+			// $.post("http://localhost:5000/api/user/signup",
+			// 	formData,	function(data){
+			// 		console.log(data)
+			// 		$("#mailEx").css("display", "none")
+			// 	}
+
+			// 	).fail(function(err){
+			// 		console.log(err.responseJSON)
+			// 		$("#mailEx").css("display", "inline")
+			// 	})
+
+
+
+	$(document).ready(function(){
+		$('#log_in').click(function(e){
+			e.preventDefault()
+
+			var lemail = $('#logMail').val()
+			var lpass = $('#logPassword').val()
+
+
+			$.post('http://localhost:5000/api/user/login',
+			{
+				"email": lemail,
+				"password": lpass
+			},
+			function(data){
+				const loggeduser = data.user[0]
+				console.log(loggeduser)
+				const token = data.token
+				
+				localStorage.setItem('luser',JSON.stringify(loggeduser))
+				var userlogged = JSON.parse(localStorage.getItem('luser'));
+				console.log(userlogged)
+				console.log(token)
+				localStorage.setItem('authorization',token)
+				$('#log_error').text("")
+				 $("#logIn").modal("hide");
+				loggedIn()
+			}
+			).fail(function(err){
+				var errorjson = err.responseJSON;
+				console.log(err.responseJSON)
+				var error = errorjson.message
+				$('#log_error').text(error)
+			})
+		})
+	})
+
+	$(document).ready(function(){
+		$('#deleteuser').click(function(e){
+			e.preventDefault()
+			var loguserd = JSON.parse(localStorage.getItem('luser'));
+			var authtoken = localStorage.getItem('Authorization')
+			var userid = loguserd._id
+			$.ajax({
+   				 url: `http://localhost:5000/api/user/delete/${userid}`,
+   				 type: 'DELETE',
+   				 beforeSend: function(request) {
+   					 request.setRequestHeader("Authorization", localStorage.getItem('authorization'));
+  					},
+   				 success: function(result) {
+   				 	console.log(result)
+   				 	logOutUser()
+   				 	$('#deleteAlert').css("display","block")
+   				    
+   				}
+
+		})
+	})
+
+
+	
+});
+</script>
+
+
+
+
+
+</html>
+
+
